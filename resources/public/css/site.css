@@ -1,16 +1,14 @@
 .body-container {
   font-family: 'Helvetica Neue', Verdana, Helvetica, Arial, sans-serif;
-  max-width: 640px;
-  margin: 0 auto;
-  padding-top: 72px;
+  margin: 10 auto;
   -webkit-font-smoothing: antialiased;
   font-size: 1.125em;
-  color: #333;
+  color: #765;
   line-height: 1.5em;
 }
 
 h1, h2, h3 {
-  color: #000;
+  color: #f00;
 }
 h1 {
   font-size: 2.5em
@@ -31,4 +29,13 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
