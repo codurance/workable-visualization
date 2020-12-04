@@ -23,7 +23,8 @@
   :plugins [[lein-environ "1.1.0"]
             [lein-cljsbuild "1.1.7"]
             [lein-asset-minifier "0.4.6"
-             :exclusions [org.clojure/clojure]]]
+             :exclusions [org.clojure/clojure]]
+            [lein-doo "0.1.10"]]
 
   :ring {:handler workable-reagent.handler/app
          :uberwar-name "workable-reagent.war"}
@@ -38,6 +39,7 @@
 
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
   :resource-paths ["resources" "target/cljsbuild"]
+  :test-paths ["test/clj"]
 
   :minify-assets
   [[:css {:source "resources/public/css/site.css"
@@ -64,11 +66,14 @@
               :source-map true
               :optimizations :none
               :pretty-print  true}}
-
-
-
-            }
-   }
+            :test 
+            {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs" "test/cljs"]
+             :id "test"
+             :compiler {:output-to "resources/public/js/main-test.js"
+                        :output-dir "resources/public/js/test/out"
+                        :optimizations :none
+                        :main workable-reagent.test
+                        :pretty-print true}}}}
 
   :figwheel
   {:http-server-root "public"
@@ -90,12 +95,12 @@
                                   [figwheel-sidecar "0.5.20"]
                                   [nrepl "0.8.0"]
                                   [pjstadig/humane-test-output "0.10.0"]
-                                  
- ]
+
+                                  ]
 
                    :source-paths ["env/dev/clj"]
                    :plugins [[lein-figwheel "0.5.20"]
-]
+                             ]
 
                    :injections [(require 'pjstadig.humane-test-output)
                                 (pjstadig.humane-test-output/activate!)]
