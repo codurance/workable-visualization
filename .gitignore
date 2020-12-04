@@ -14,3 +14,11 @@ pom.xml.asc
 /.env
 /.sass-cache
 /node_modules
+.floo
+.flooignore
+.lsp
+.rebel_readline_history
+package-lock.json
+resources/test
+resources/public/js/
+.clj-kondo
