@@ -18,13 +18,17 @@
                  [metosin/jsonista "0.2.6"]
                  [pez/clerk "1.0.0"]
                  [venantius/accountant "0.2.5"
-                  :exclusions [org.clojure/tools.reader]]]
+                  :exclusions [org.clojure/tools.reader]]
+                 [cljs-http "0.1.46"]
+                 [clj-http "3.10.3"]
+                 [org.clojure/data.json "1.0.0"]]
 
   :plugins [[lein-environ "1.1.0"]
             [lein-cljsbuild "1.1.7"]
             [lein-asset-minifier "0.4.6"
              :exclusions [org.clojure/clojure]]
-            [lein-doo "0.1.10"]]
+            [lein-doo "0.1.10"]
+            [lein-auto "0.1.3"]]
 
   :ring {:handler workable-reagent.handler/app
          :uberwar-name "workable-reagent.war"}
@@ -112,4 +116,5 @@
                        :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
                        :env {:production true}
                        :aot :all
-                       :omit-source true}})
+                       :omit-source true}
+             :test {:dependencies [[clj-http-mock "0.1.0"]]}})
