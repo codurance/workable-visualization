@@ -42,6 +42,7 @@
 (defn stages-handler [_request]
   (let [workable-response (get-stages default-config)]
     {:status (:status workable-response)
+     :headers (:headers workable-response)
      :body (:body workable-response)}))
 
 (def app

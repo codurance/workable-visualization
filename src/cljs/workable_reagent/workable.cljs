@@ -1,8 +1,7 @@
-(ns workable-reagent.workable)
+(ns workable-reagent.workable
+(:require   [cljs-http.client :as http]
+            [cljs.core.async :as async]))
 
 (defn get-stages []
-  '({:name "Sourced"}
-    {:name "Tech Interview"}
-    {:name "Pairing Interview"}
-    {:name "Offer"}
-    {:name "Praised"}))
+  (http/get "/api/stages"))
+

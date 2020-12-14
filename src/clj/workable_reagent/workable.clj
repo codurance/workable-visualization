@@ -8,4 +8,3 @@
             {:throw-exceptions false
              :content-type "application/json"
              :headers {"Authorization" (str "Bearer " (:token config))}}))
-

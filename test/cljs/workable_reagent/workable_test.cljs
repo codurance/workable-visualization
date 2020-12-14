@@ -1,6 +1,13 @@
 (ns workable-reagent.workable-test
-  (:require [cljs.test :refer-macros [deftest is testing]]))
+  (:require [cljs.test :refer-macros [deftest is testing]]
+            [cljs-http.client :as http]
+            [cljs.core.async :as async]
+            [workable-reagent.workable :refer [get-stages]]))
 
 (deftest empty-test 
-  (testing "useless things"
-    (is (= 2 2))))
+  (testing "gets stages from the server API"
+    (let [c (async/chan)]
+      (with-redefs [http/get (fn [url] c)]
+        (is (= (get-stages)
+               c))))))
+

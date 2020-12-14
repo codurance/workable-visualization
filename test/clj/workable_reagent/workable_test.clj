@@ -6,7 +6,9 @@
 
 (deftest get-stages-test
   (testing "Failed to get stages"
-    (let [expected-response {:status 401 :body  "{\"error\": \"Not authorized\"}"}]
+    (let [expected-response {:status 401 
+                             :headers {"Content-Type" "application/json"}
+                             :body  "{\"error\": \"Not authorized\"}"}]
       (hmock/with-mock-routes
         [(hmock/route :get "https://test.workable.com/spi/v3/stages")
          (constantly expected-response)]
@@ -14,10 +16,14 @@
           (is (and (= (:status expected-response)
                       (:status actual-response))
                    (= (:body expected-response)
-                      (:body actual-response))))))))
+                      (:body actual-response))
+                   (= (:headers expected-response)
+                      (:headers actual-response))))))))
 
   (testing "Succeeded to get stages"
-    (let [expected-response {:status 200 :body  "[{\"slug\":\"sourced\", \"name\": \"sourced\", \"kind\": \"sourced\", \"position\": 0}]"}]
+    (let [expected-response {:status 200 
+                             :headers {"Content-Type" "application/json"}
+                             :body  "[{\"slug\":\"sourced\", \"name\": \"sourced\", \"kind\": \"sourced\", \"position\": 0}]"}]
       (hmock/with-mock-routes
         [(hmock/route :get "https://test.workable.com/spi/v3/stages")
          (constantly expected-response)]
@@ -25,6 +31,7 @@
           (is (and (= (:status expected-response)
                       (:status actual-response))
                    (= (:body expected-response)
-                      (:body actual-response)))))))))
-
+                      (:body actual-response))
+                   (= (:headers expected-response)
+                      (:headers actual-response)))))))))
 
