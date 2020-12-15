@@ -10,4 +10,3 @@
       (with-redefs [http/get (fn [url] c)]
         (is (= (get-stages)
                c))))))
-
