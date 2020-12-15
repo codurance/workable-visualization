@@ -16,3 +16,7 @@
 
 (defn get-active-jobs [config]
   (workable-get config "/jobs" {"status" "published"}))
+
+(defn get-candidates-for-job [config job-code]
+  (workable-get config "/candidates" {"shortcode" job-code
+                                      "limit" 300000}))
