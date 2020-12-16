@@ -24,18 +24,40 @@ h3 {
 
 a {
   text-decoration: none;
-  color: #09f;
+  color: #fff;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-table, th, td {
+table, th {
   border: 1px solid black;
+  font-size: 20px;
+}
+
+td {
+  border-right: 1px solid black;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
 }
+
+div {
+    margin: 5px;
+}
+
+.London {
+    background-color: #eb5a46;
+    border: 1px solid black;
+
+}
+
+.Barcelona {
+    background-color: #0079bf;
+    border: 1px solid black;
+}
+
+.Manchester {
+    background-color: #61bd4f;
+    border: 1px solid black;
+}
+
