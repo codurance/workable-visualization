@@ -95,7 +95,8 @@
    (reitit-ring/router
     [["/" {:get {:handler index-handler}}]
      ["/lol" {:get {:handler test-handler}}]
-     ["/api/stages" {:get {:handler stages-handler}}]])
+     ["/api/stages" {:get {:handler stages-handler}}]
+     ["/api/data" {:get {:handler workable-data-handler}}]])
    (reitit-ring/routes
     (reitit-ring/create-resource-handler {:path "/" :root "/public"})
     (reitit-ring/create-default-handler))
