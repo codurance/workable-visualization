@@ -61,7 +61,7 @@
                                                 (group-by :stage (:candidates partial-response-body)))})}
         (let [current-job (first remaing-jobs)
               candidates-response (get-candidates-for-job default-config (:shortcode current-job))]
-          (Thread/sleep 500)
+          (Thread/sleep 1000)
           (if (not= (:status candidates-response) 200)
             {:status 404
              :headers {"Content-Type" "application/json"}
@@ -70,7 +70,7 @@
                    {:stages (:stages partial-response-body)
                     :candidates (concat (:candidates partial-response-body)
                                         (map (fn [c] {:name (:name c)
-                                                      :profile-url (:profile-url c)
+                                                      :profile-url (:profile_url c)
                                                       :stage (:stage c)
                                                       :role (:title current-job)
                                                       :location (:city (:location current-job))})

@@ -108,33 +108,33 @@
           candidates-for-1234-response {:status 200
                                         :headers {"Content-Type" "application/json"}
                                         :body (json/write-str {:candidates '({:name "John Doe"
-                                                                              :profile-url "http://john-doe"
+                                                                              :profile_url "http://john-doe"
                                                                               :stage "Sourced"
                                                                               }
                                                                              )})}
           candidates-for-5678-response {:status 200
                                         :headers {"Content-Type" "application/json"}
                                         :body (json/write-str {:candidates '({:name "James Doe"
-                                                                              :profile-url "http://james-doe"
+                                                                              :profile_url "http://james-doe"
                                                                               :stage "Applied"
                                                                               }
                                                                              {:name "Jane Doe"
-                                                                              :profile-url "http://jane-doe"
+                                                                              :profile_url "http://jane-doe"
                                                                               :stage "Phone Screen"
                                                                               }
                                                                              )})}
           candidates-for-9012-response {:status 200
                                         :headers {"Content-Type" "application/json"}
                                         :body (json/write-str {:candidates '({:name "Tracy Doe"
-                                                                              :profile-url "http://tracy-doe"
+                                                                              :profile_url "http://tracy-doe"
                                                                               :stage "Applied"
                                                                               }
                                                                              {:name "Thomas Doe"
-                                                                              :profile-url "http://thomas-doe"
+                                                                              :profile_url "http://thomas-doe"
                                                                               :stage "Sourced"
                                                                               }
                                                                              {:name "Michael Doe"
-                                                                              :profile-url "http://michael-doe"
+                                                                              :profile_url "http://michael-doe"
                                                                               :stage "Applied"
                                                                               }
                                                                              )})}
