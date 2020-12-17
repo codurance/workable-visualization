@@ -61,7 +61,7 @@
                                                 (group-by :stage (:candidates partial-response-body)))})}
         (let [current-job (first remaing-jobs)
               candidates-response (get-candidates-for-job default-config (:shortcode current-job))]
-          (Thread/sleep 1000)
+          (Thread/sleep 1500)
           (if (not= (:status candidates-response) 200)
             {:status 404
              :headers {"Content-Type" "application/json"}
@@ -74,8 +74,9 @@
                                                       :stage (:stage c)
                                                       :role (:title current-job)
                                                       :location (:city (:location current-job))})
-                                             (:candidates (json/read-str (:body candidates-response)
-                                                                         :key-fn keyword))))
+                                             (filter #(not (:disqualified %))
+                                                     (:candidates (json/read-str (:body candidates-response)
+                                                                                 :key-fn keyword)))))
                     }))))))
   (let [stages-response (get-stages default-config)]
     (if (= (:status stages-response) 200)

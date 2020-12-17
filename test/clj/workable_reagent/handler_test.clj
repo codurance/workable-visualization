@@ -110,6 +110,7 @@
                                         :body (json/write-str {:candidates '({:name "John Doe"
                                                                               :profile_url "http://john-doe"
                                                                               :stage "Sourced"
+                                                                              :disqualified false
                                                                               }
                                                                              )})}
           candidates-for-5678-response {:status 200
@@ -117,10 +118,12 @@
                                         :body (json/write-str {:candidates '({:name "James Doe"
                                                                               :profile_url "http://james-doe"
                                                                               :stage "Applied"
+                                                                              :disqualified false
                                                                               }
                                                                              {:name "Jane Doe"
                                                                               :profile_url "http://jane-doe"
                                                                               :stage "Phone Screen"
+                                                                              :disqualified false
                                                                               }
                                                                              )})}
           candidates-for-9012-response {:status 200
@@ -128,14 +131,17 @@
                                         :body (json/write-str {:candidates '({:name "Tracy Doe"
                                                                               :profile_url "http://tracy-doe"
                                                                               :stage "Applied"
+                                                                              :disqualified false
                                                                               }
                                                                              {:name "Thomas Doe"
                                                                               :profile_url "http://thomas-doe"
                                                                               :stage "Sourced"
+                                                                              :disqualified false
                                                                               }
                                                                              {:name "Michael Doe"
                                                                               :profile_url "http://michael-doe"
                                                                               :stage "Applied"
+                                                                              :disqualified false
                                                                               }
                                                                              )})}
           expected-response {:status 200
@@ -168,6 +174,151 @@
                                                                                     :stage "Sourced"
                                                                                     :role "ba"
                                                                                     :location "baland"
+                                                                                    }
+                                                                                   ]
+                                                                           }
+                                                                          {
+                                                                           :name "Applied"
+                                                                           :items [
+                                                                                   {:name "James Doe"
+                                                                                    :profile-url "http://james-doe"
+                                                                                    :stage "Applied"
+                                                                                    :role "qa"
+                                                                                    :location "qaland"
+                                                                                    }
+                                                                                   {:name "Tracy Doe"
+                                                                                    :profile-url "http://tracy-doe"
+                                                                                    :stage "Applied"
+                                                                                    :role "ba"
+                                                                                    :location "baland"
+                                                                                    }
+                                                                                   {:name "Michael Doe"
+                                                                                    :profile-url "http://michael-doe"
+                                                                                    :stage "Applied"
+                                                                                    :role "ba"
+                                                                                    :location "baland"
+                                                                                    }
+                                                                                   ]
+                                                                           }
+                                                                          {
+                                                                           :name "Phone Screen"
+                                                                           :items [
+                                                                                   {:name "Jane Doe"
+                                                                                    :profile-url "http://jane-doe"
+                                                                                    :stage "Phone Screen"
+                                                                                    :role "qa"
+                                                                                    :location "qaland"
+                                                                                    }
+                                                                                   ]
+                                                                           }
+                                                                          ]
+                                                    })}]
+(with-redefs [get-stages (fn [_] stages-response)
+              get-active-jobs (fn [_] active-jobs-response)
+              get-candidates-for-job (fn [_ id] 
+                                       (cond
+                                         (= id "1234") candidates-for-1234-response
+                                         (= id "5678") candidates-for-5678-response
+                                         (= id "9012") candidates-for-9012-response))]
+  (is (= expected-response (workable-data-handler {}))))))
+
+(testing "successfully ommits disqualified candidates"
+    (let [stages-response {:status 200
+                           :headers {"Content-Type" "application/json"}
+                           :body (json/write-str {:stages '({:slug "sourced"
+                                                             :name "Sourced"
+                                                             :kind "sourced"
+                                                             :position 0}
+                                                            {:slug "applied"
+                                                             :name "Applied"
+                                                             :kind "applied"
+                                                             :position 1}
+                                                            {:slug "phone-screen"
+                                                             :name "Phone Screen"
+                                                             :kind "phone-screen"
+                                                             :position 2})})}
+          active-jobs-response {:status 200
+                                :headers {"Content-Type" "application/json"}
+                                :body (json/write-str {:jobs '({:id "1234"
+                                                                :shortcode "1234"
+                                                                :title "developer"
+                                                                :location {
+                                                                           :city "developerland"
+                                                                           }}
+                                                               {:id "5678"
+                                                                :shortcode "5678"
+                                                                :title "qa"
+                                                                :location {
+                                                                           :city "qaland"
+                                                                           }}
+                                                               {:id "9012"
+                                                                :shortcode "9012"
+                                                                :title "ba"
+                                                                :location {
+                                                                           :city "baland"
+                                                                           }})})}
+          candidates-for-1234-response {:status 200
+                                        :headers {"Content-Type" "application/json"}
+                                        :body (json/write-str {:candidates '({:name "John Doe"
+                                                                              :profile_url "http://john-doe"
+                                                                              :stage "Sourced"
+                                                                              :disqualified false
+                                                                              }
+                                                                             )})}
+          candidates-for-5678-response {:status 200
+                                        :headers {"Content-Type" "application/json"}
+                                        :body (json/write-str {:candidates '({:name "James Doe"
+                                                                              :profile_url "http://james-doe"
+                                                                              :stage "Applied"
+                                                                              :disqualified false
+                                                                              }
+                                                                             {:name "Jane Doe"
+                                                                              :profile_url "http://jane-doe"
+                                                                              :stage "Phone Screen"
+                                                                              :disqualified false
+                                                                              }
+                                                                             )})}
+          candidates-for-9012-response {:status 200
+                                        :headers {"Content-Type" "application/json"}
+                                        :body (json/write-str {:candidates '({:name "Tracy Doe"
+                                                                              :profile_url "http://tracy-doe"
+                                                                              :stage "Applied"
+                                                                              :disqualified false
+                                                                              }
+                                                                             {:name "Thomas Doe"
+                                                                              :profile_url "http://thomas-doe"
+                                                                              :stage "Sourced"
+                                                                              :disqualified true
+                                                                              }
+                                                                             {:name "Michael Doe"
+                                                                              :profile_url "http://michael-doe"
+                                                                              :stage "Applied"
+                                                                              :disqualified false
+                                                                              }
+                                                                             )})}
+          expected-response {:status 200
+                             :headers {"Content-Type" "application/json"}
+                             :body (json/write-str {:stages [
+                                                             {:name "Sourced"
+                                                              :kind "sourced"
+                                                              }
+                                                             {:name "Applied"
+                                                              :kind "applied"
+                                                              }
+                                                             {
+                                                              :name "Phone Screen"
+                                                              :kind "phone-screen"
+                                                              }]
+                                                             :candidates [
+                                                                          {
+                                                                           :name "Sourced"
+                                                                           :items [
+                                                                                   {
+                                                                                    :name "John Doe"
+                                                                                    :profile-url "http://john-doe"
+                                                                                    :stage "Sourced"
+                                                                                    :role "developer"
+                                                                                    :location "developerland"
                                                                                     }
                                                                                    ]
                                                                            }
