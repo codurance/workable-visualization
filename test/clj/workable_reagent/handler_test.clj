@@ -156,12 +156,14 @@
                                                                                     :name "John Doe"
                                                                                     :profile-url "http://john-doe"
                                                                                     :stage "Sourced"
+                                                                                    :role "developer"
                                                                                     :location "developerland"
                                                                                     }
                                                                                    {
                                                                                     :name "Thomas Doe"
                                                                                     :profile-url "http://thomas-doe"
                                                                                     :stage "Sourced"
+                                                                                    :role "ba"
                                                                                     :location "baland"
                                                                                     }
                                                                                    ]
@@ -172,16 +174,19 @@
                                                                                    {:name "James Doe"
                                                                                     :profile-url "http://james-doe"
                                                                                     :stage "Applied"
+                                                                                    :role "qa"
                                                                                     :location "qaland"
                                                                                     }
                                                                                    {:name "Tracy Doe"
                                                                                     :profile-url "http://tracy-doe"
                                                                                     :stage "Applied"
+                                                                                    :role "ba"
                                                                                     :location "baland"
                                                                                     }
                                                                                    {:name "Michael Doe"
                                                                                     :profile-url "http://michael-doe"
                                                                                     :stage "Applied"
+                                                                                    :role "ba"
                                                                                     :location "baland"
                                                                                     }
                                                                                    ]
@@ -192,6 +197,7 @@
                                                                                    {:name "Jane Doe"
                                                                                     :profile-url "http://jane-doe"
                                                                                     :stage "Phone Screen"
+                                                                                    :role "qa"
                                                                                     :location "qaland"
                                                                                     }
                                                                                    ]

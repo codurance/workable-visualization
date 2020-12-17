@@ -71,6 +71,7 @@
                                         (map (fn [c] {:name (:name c)
                                                       :profile-url (:profile-url c)
                                                       :stage (:stage c)
+                                                      :role (:title current-job)
                                                       :location (:city (:location current-job))})
                                              (:candidates (json/read-str (:body candidates-response)
                                                                          :key-fn keyword))))
