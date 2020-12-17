@@ -8,7 +8,8 @@
     [accountant.core :as accountant]
     [workable-reagent.workable :as workable]
     [cljs.core.async :refer-macros [go]]
-    [cljs.core.async :refer [<!]]))
+    [cljs.core.async :refer [<!]]
+    [clojure.string :as str]))
 
 ;; -------------------------
 ;; Routes
@@ -36,7 +37,13 @@
         [:p "Loading..."]
       [:table
        [:tr (map (fn [s] [:th (:name s)]) (:stages @data-atom))]
-       (loop [candidates (:candidates @data-atom)
+       (let [org-candidates (map (fn [s]
+                                   {:name (:name s)
+                                    :items (:items (first (filter (fn [c] (= (str/lower-case (:name s))
+                                                                             (str/lower-case (:name c))))
+                                                                  (:candidates @data-atom))))})
+                                 (:stages @data-atom))]
+       (loop [candidates org-candidates
               result []]
          (let [remaining (reduce + (map (fn [s] (count (:items s))) candidates))]
            (if (= remaining 0)
@@ -55,7 +62,7 @@
                                               [:div.name (:name candidate)]
                                               [:div.role (:role candidate)]
                                               [:div.location (:location candidate)]]]])) 
-                                   candidates)]])))))]))))
+                                   candidates)]]))))))]))))
 
 ;; -------------------------
 ;; Translate routes -> page components
@@ -102,4 +109,3 @@
        (boolean (reitit/match-by-path router path)))})
   (accountant/dispatch-current!)
   (mount-root))
-

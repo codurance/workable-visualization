@@ -6,7 +6,8 @@
    [config.core :refer [env]]
    [clojure.data.json :as json]
    [workable-reagent.workable :refer [get-stages get-active-jobs get-candidates-for-job]]
-   [workable-reagent.config :refer [default-config]]))
+   [workable-reagent.config :refer [default-config]]
+   [clojure.string :as string]))
 
 (def mount-target
   [:div#app
@@ -57,8 +58,9 @@
         {:status 200
          :headers {"Content-Type" "application/json"}
          :body (json/write-str { :stages (:stages partial-response-body) 
-                               :candidates (map (fn [[ s i ]] {:name s :items i})
-                                                (group-by :stage (:candidates partial-response-body)))})}
+                               :candidates (map (fn [[ _ i ]] {:name (:stage (first i)) :items i})
+                                                (group-by #(string/lower-case (:stage %)) 
+                                                          (:candidates partial-response-body)))})}
         (let [current-job (first remaing-jobs)
               candidates-response (get-candidates-for-job default-config (:shortcode current-job))]
           (Thread/sleep 1500)
