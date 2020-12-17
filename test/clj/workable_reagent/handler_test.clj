@@ -88,16 +88,19 @@
           active-jobs-response {:status 200
                                 :headers {"Content-Type" "application/json"}
                                 :body (json/write-str {:jobs '({:id "1234"
+                                                                :shortcode "1234"
                                                                 :title "developer"
                                                                 :location {
                                                                            :city "developerland"
                                                                            }}
                                                                {:id "5678"
+                                                                :shortcode "5678"
                                                                 :title "qa"
                                                                 :location {
                                                                            :city "qaland"
                                                                            }}
                                                                {:id "9012"
+                                                                :shortcode "9012"
                                                                 :title "ba"
                                                                 :location {
                                                                            :city "baland"

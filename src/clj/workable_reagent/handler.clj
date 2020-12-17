@@ -60,7 +60,7 @@
                                :candidates (map (fn [[ s i ]] {:name s :items i})
                                                 (group-by :stage (:candidates partial-response-body)))})}
         (let [current-job (first remaing-jobs)
-              candidates-response (get-candidates-for-job default-config (:id current-job))]
+              candidates-response (get-candidates-for-job default-config (:shortcode current-job))]
           (if (not= (:status candidates-response) 200)
             {:status 404
              :headers {"Content-Type" "application/json"}
