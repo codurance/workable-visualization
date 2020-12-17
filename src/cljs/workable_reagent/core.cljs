@@ -48,7 +48,10 @@
                               (map (fn [s] 
                                      (let [candidate (first (:items s))]
                                        [:td [:a {:href (:profile-url candidate)} 
-                                             [:div {:class (:location candidate)}
+                                             [:div {:class (if (and (not (nil? (:name candidate)))
+                                                                    (nil? (:location candidate)))
+                                                             "unknown"
+                                                             (:location candidate))}
                                               [:div.name (:name candidate)]
                                               [:div.role (:role candidate)]
                                               [:div.location (:location candidate)]]]])) 

@@ -60,4 +60,8 @@ div {
     background-color: #61bd4f;
     border: 1px solid black;
 }
-
+.unknown {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid black;
+}
