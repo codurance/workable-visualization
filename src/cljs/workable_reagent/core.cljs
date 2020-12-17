@@ -26,75 +26,14 @@
 ;; Page components
 
 (defn home-page []
-  (let [stages-atom (reagent/atom '())
-        data-atom (reagent/atom {:stages [
-                                          {:name "Sourced"
-                                           :kind "sourced"
-                                           }
-                                          {:name "Applied"
-                                           :kind "applied"
-                                           }
-                                          {
-                                           :name "Phone Screen"
-                                           :kind "phone-screen"
-                                           }]
-                                 :candidates [
-                                              {
-                                               :name "Sourced"
-                                               :items [
-                                                       {
-                                                        :name "John Doe"
-                                                        :profile-url "http://john-doe"
-                                                        :role "Master of Puppets"
-                                                        :stage "Sourced"
-                                                        :location "London"
-                                                        }
-                                                       {
-                                                        :name "Thomas Doe"
-                                                        :profile-url "http://thomas-doe"
-                                                        :role "Supressor of Tyrany"
-                                                        :stage "Sourced"
-                                                        :location "Manchester"
-                                                        }
-                                                       ]
-                                               }
-                                              {
-                                               :name "Applied"
-                                               :items [
-                                                       {:name "James Doe"
-                                                        :profile-url "http://james-doe"
-                                                        :role "Master of Puppets"
-                                                        :stage "Applied"
-                                                        :location "Manchester"
-                                                        }
-                                                       {:name "Tracy Doe"
-                                                        :role "Supressor of Tyrany"
-                                                        :profile-url "http://tracy-doe"
-                                                        :stage "Applied"
-                                                        :location "Barcelona"
-                                                        }
-                                                       {:name "Michael Doe"
-                                                        :profile-url "http://michael-doe"
-                                                        :role "Chief Subliminal Officer"
-                                                        :stage "Applied"
-                                                        :location "Barcelona"
-                                                        }
-                                                       ]
-                                               }
-                                              {
-                                               :name "Phone Screen"
-                                               :items [
-                                                       {:name "Jane Doe"
-                                                        :role "Supressor of Tyrany"
-                                                        :profile-url "http://jane-doe"
-                                                        :stage "Phone Screen"
-                                                        :location "Manchester"
-                                                        }
-                                                       ]
-                                               }
-                                              ]
-                                 })]
+  (let [data-atom (reagent/atom {})]
     (fn []
+      (if (empty? @data-atom)
+      (go
+        (let [response (<! (workable/get-data))]
+          (reset! data-atom (:body response)))))
+      (if (empty? @data-atom)
+        [:p "Loading..."]
       [:table
        [:tr (map (fn [s] [:th (:name s)]) (:stages @data-atom))]
        (loop [candidates (:candidates @data-atom)
@@ -113,7 +52,7 @@
                                               [:div.name (:name candidate)]
                                               [:div.role (:role candidate)]
                                               [:div.location (:location candidate)]]]])) 
-                                   candidates)]])))))])))
+                                   candidates)]])))))]))))
 
 ;; -------------------------
 ;; Translate routes -> page components
